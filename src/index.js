@@ -13,8 +13,8 @@ const bindActionCreator = (creator, dispatch) => (...args) => {
 }
 
 const incDispatch = bindActionCreator(inc, dispatch)
-const decDispatch = () => dispatch(dec());
-const rndDispatch = (value) => dispatch(rnd(value));
+const decDispatch = bindActionCreator(dec, dispatch);
+const rndDispatch = bindActionCreator(rnd, dispatch);
 
 //  Проверяем нажатия кнопок
 document.getElementById('inc').addEventListener('click', incDispatch);
