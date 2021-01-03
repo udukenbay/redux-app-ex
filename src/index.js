@@ -1,12 +1,13 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
 import {createStore, bindActionCreators} from "redux";
+import {Provider} from 'react-redux';
+
 import reducer from './reducer';
-import * as actions from './actions';
-// редюсер
-
-
+import App from './components/app';
+ 
 //  создаем хранилище
-const store = createStore(reducer);
-const {dispatch} = store;
+const store = createStore(reducer);//keep in index.js
 
 // const actions = {
 //   inc: inc,
@@ -14,20 +15,17 @@ const {dispatch} = store;
 //   rnd: rnd
 // }
 
-const {inc, dec, rnd} = bindActionCreators(actions, dispatch);
+// const {inc, dec, rnd} = bindActionCreators(actions, dispatch);
 
-//  Проверяем нажатия кнопок
-document.getElementById('inc').addEventListener('click', inc);
-document.getElementById('dec').addEventListener('click', dec);
-document.getElementById('res').addEventListener('click', ()=>{
-  const value = Math.floor(Math.random() * 10);
-  rnd(value);
-});
-
-//  функция обновляет counter
+//keep in index.js
 const update = () => {
-  document.getElementById('counter').textContent = store.getState();
+    ReactDOM.render(
+    <Provider store={store}>
+      <App/>
+    </Provider>, document.getElementById('root'));
 }
+update();
 
 // при каждом изменении
-store.subscribe(update);
+store.subscribe(update);//keep in index.js
+
