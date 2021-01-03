@@ -5,24 +5,29 @@ const reducer = (state = 0, action) => {
   switch (action.type) {
     case 'INC':
       return state + 1;
+    case 'DEC':
+      return state - 1;
     default:
       return state;
   }
 }
 
 const store = createStore(reducer);
-// let state = reducer(undefined, {});
 
-store.subscribe(()=>{
-  console.log(store.getState())
-})
+document.getElementById('inc').addEventListener('click', ()=>{
+  store.dispatch({type: 'INC'})
+});
 
-store.dispatch({type: 'INC'});
-store.dispatch({type: 'INC'});
-store.dispatch({type: 'INC'});
+document.getElementById('dec').addEventListener('click', ()=>{
+  store.dispatch({type: 'DEC'})
+});
 
-// state = reducer(state, {type: 'INC'});
-// console.log(state);
+const update = () => {
+  document.getElementById('counter').textContent = store.getState();
+}
 
-// state = reducer(state, {type: 'INC'});
-// console.log(state);
+store.subscribe(update);
+
+// store.dispatch({type: 'INC'});
+// store.dispatch({type: 'INC'});
+// store.dispatch({type: 'INC'});
