@@ -1,27 +1,30 @@
 import {createStore} from "redux";
 
-const reducer = (state = 0, action) => {
+// редюсер
+const counter = (state = 0, action) => {
 
   switch (action.type) {
     case 'INC':
       return state + 1;
     case 'DEC':
       return state - 1;
-    case 'RND':
-      return state + action.value;
+    case 'RES':
+      return 0;
     default:
       return state;
   }
 }
 
+//  создаем хранилище
+const store = createStore(counter);
 
+// Вспомогательные функции
 const inc = () => ({type: 'INC'});//action creator-ы - это функции, которые создают объект который мы передаем во внутрь dispatch
 const dec = () => ({type: 'DEC'});
-const rnd = (value) => ({type: 'RND', value});
+const res = () => ({type: 'RES'});
 
 
-const store = createStore(reducer);
-
+//  Проверяем нажатия кнопок
 document.getElementById('inc').addEventListener('click', ()=>{
   store.dispatch(inc())
 });
@@ -30,17 +33,14 @@ document.getElementById('dec').addEventListener('click', ()=>{
   store.dispatch(dec())
 });
 
-document.getElementById('rnd').addEventListener('click', ()=>{
-  const value = Math.floor(Math.random() * 10);
-  store.dispatch(rnd(value))
+document.getElementById('res').addEventListener('click', ()=>{
+  store.dispatch(res())
 });
 
+//  функция обновляет counter
 const update = () => {
   document.getElementById('counter').textContent = store.getState();
 }
 
+// при каждом изменении
 store.subscribe(update);
-
-// store.dispatch({type: 'INC'});
-// store.dispatch({type: 'INC'});
-// store.dispatch({type: 'INC'});
