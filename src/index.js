@@ -1,6 +1,6 @@
-import {createStore} from "redux";
+import {createStore, bindActionCreators} from "redux";
 import reducer from './reducer';
-import {inc, dec, rnd} from './actions';
+import * as actions from './actions';
 // редюсер
 
 
@@ -8,20 +8,20 @@ import {inc, dec, rnd} from './actions';
 const store = createStore(reducer);
 const {dispatch} = store;
 
-const bindActionCreator = (creator, dispatch) => (...args) => {
-  dispatch(creator(...args));
-}
+// const actions = {
+//   inc: inc,
+//   dec: dec,
+//   rnd: rnd
+// }
 
-const incDispatch = bindActionCreator(inc, dispatch)
-const decDispatch = bindActionCreator(dec, dispatch);
-const rndDispatch = bindActionCreator(rnd, dispatch);
+const {inc, dec, rnd} = bindActionCreators(actions, dispatch);
 
 //  Проверяем нажатия кнопок
-document.getElementById('inc').addEventListener('click', incDispatch);
-document.getElementById('dec').addEventListener('click', decDispatch);
+document.getElementById('inc').addEventListener('click', inc);
+document.getElementById('dec').addEventListener('click', dec);
 document.getElementById('res').addEventListener('click', ()=>{
   const value = Math.floor(Math.random() * 10);
-  rndDispatch(value);
+  rnd(value);
 });
 
 //  функция обновляет counter
